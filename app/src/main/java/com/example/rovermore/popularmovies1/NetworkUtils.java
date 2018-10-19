@@ -1,15 +1,23 @@
 package com.example.rovermore.popularmovies1;
 
+import android.net.Uri;
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
 public class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
-
+    private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
+    private static final String POPULAR_PATH = "popular";
+    private static final String TOP_RATED_PATH = "top_rated";
+    static final String API_KEY = "d091d663185ac3778b669a2e6ddfe40a";
+    static final String API_PARAM = "api_key";
 
     /**
      * Builds the URL used to talk to the MovieDB server.
@@ -17,8 +25,21 @@ public class NetworkUtils {
     public static URL urlBuilder(String strUrl){
 
         //Implement the Url builder
+        Uri buildUri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(POPULAR_PATH)
+                .appendQueryParameter(API_PARAM, API_KEY)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
-        return  null;
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
+
     }
 
     /**
