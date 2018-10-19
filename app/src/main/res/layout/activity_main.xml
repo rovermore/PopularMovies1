@@ -13,6 +13,8 @@
         android:id="@+id/title_tv"
         android:text="@string/POPULAR"
         android:textSize="34dp"
+        android:textColor="@android:color/black"
+        android:padding="15dp"
         />
 
     <view
@@ -20,7 +22,8 @@
         class="android.support.v7.app.AlertController$RecycleListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scrollbars="vertical">
+        android:scrollbars="vertical"
+        android:padding="15dp">
 
     </view>
 
