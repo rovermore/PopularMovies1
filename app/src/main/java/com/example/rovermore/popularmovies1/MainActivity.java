@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         MovieAdapter movieAdapter = new MovieAdapter(this,movieList);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(movieAdapter);

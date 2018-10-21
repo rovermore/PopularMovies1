@@ -17,23 +17,23 @@ public class Movie {
 
     }
 
-    public static String getOriginalTitle() {
+    public String getOriginalTitle() {
         return originalTitle;
     }
 
-    public static String getPosterPath() {
+    public String getPosterPath() {
         return posterPath;
     }
 
-    public static String getOverview() {
+    public String getOverview() {
         return overview;
     }
 
-    public static double getVoteAverage() {
+    public double getVoteAverage() {
         return voteAverage;
     }
 
-    public static String getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 }

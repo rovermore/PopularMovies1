@@ -15,6 +15,7 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder>{
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
+    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342";
 
     private List<Movie> movieList;
     private Context context;
@@ -37,21 +38,35 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     }
 
     @Override
-    public MovieAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,parent,false);
         return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MovieAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) {
         Movie currentMovie = movieList.get(position);
+
+        //String movieName = currentMovie.getOriginalTitle();
+
         String posterPath = currentMovie.getPosterPath();
         String url = NetworkUtils.posterUrlBuilder(posterPath);
 
+        /*StringBuilder stringUrlBuilder = new StringBuilder();
+        stringUrlBuilder.append(POSTER_BASE_URL);
+        stringUrlBuilder.append(posterPath);
+        String url = stringUrlBuilder.toString();*/
+
         Picasso.with(context)
                 .load(url)
+                .placeholder(R.drawable.movie_image_placeholder)
+                .error(R.drawable.movie_image_placeholder)
                 .into(holder.poster);
-        Log.v(TAG, "Recuested URL " + url);
+
+        Log.v(TAG, "Requested URL " + url);
+        Log.v(TAG, "Position " + position);
+        Log.v(TAG, "Poster path " + posterPath);
+        //Log.v(TAG, "title " + movieName);
     }
 
     @Override

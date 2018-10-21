@@ -24,7 +24,7 @@ public class NetworkUtils {
     public static final String TOP_RATED_PATH = "top_rated";
     static final String API_KEY = "d091d663185ac3778b669a2e6ddfe40a";
     static final String API_PARAM = "api_key";
-    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w185";
+    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342";
 
 
     /**
@@ -50,6 +50,9 @@ public class NetworkUtils {
 
     }
 
+    /**
+     * Builds the URL used to talk to download the movie poster.
+     */
     public static String posterUrlBuilder(String posterPath){
 
         //Implement the Url builder
@@ -97,6 +100,9 @@ public class NetworkUtils {
         }
     }
 
+    /**
+     * Parses the JSON and saves into a Movie object.
+     */
     public static List<Movie> parseJson (String json) throws JSONException {
         List<Movie> movieList = new ArrayList<>();
         JSONObject resultJson = null;
@@ -116,6 +122,9 @@ public class NetworkUtils {
             String releaseDate = jsonMovie.optString("release_date");
 
             Movie movie = new Movie(originalTitle,posterPath, overview, voteAverage,releaseDate);
+
+            Log.v(TAG, "title " + originalTitle);
+            Log.v(TAG, "poster " + posterPath);
 
             movieList.add(movie);
         }
