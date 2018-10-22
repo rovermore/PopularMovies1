@@ -5,11 +5,11 @@ import android.os.Parcelable;
 
 public class Movie implements Parcelable {
 
-    public static String originalTitle;
-    public static String posterPath;
-    public static String overview;
-    public static double voteAverage;
-    public static String releaseDate;
+    private String originalTitle;
+    private String posterPath;
+    private String overview;
+    private double voteAverage;
+    private String releaseDate;
 
     public Movie(String originalTitle, String posterPath, String overview, double voteAverage, String releaseDate){
         this.originalTitle=originalTitle;

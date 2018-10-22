@@ -1,5 +1,6 @@
 package com.example.rovermore.popularmovies1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +19,7 @@ import java.util.List;
 import static com.example.rovermore.popularmovies1.NetworkUtils.POPULAR_PATH;
 import static com.example.rovermore.popularmovies1.NetworkUtils.TOP_RATED_PATH;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterClickHandler{
 
 
     @Override
@@ -31,13 +32,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void createUI(List<Movie> movieList){
 
-        MovieAdapter movieAdapter = new MovieAdapter(this,movieList);
+        MovieAdapter movieAdapter = new MovieAdapter(this,movieList,this);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(movieAdapter);
+    }
+
+    @Override
+    public void onClick(Movie currentMovie) {
+
+        Intent intent = new Intent(this,DetailActivity.class);
+        intent.putExtra("movieData",currentMovie);
+        startActivity(intent);
     }
 
     public class FetchMovies extends AsyncTask<String, Void, List<Movie>>{

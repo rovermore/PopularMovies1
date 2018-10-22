@@ -15,25 +15,37 @@ import java.util.List;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder>{
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
-    private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342";
 
     private List<Movie> movieList;
     private Context context;
+    private MovieAdapterClickHandler mClickhandler;
 
-    public MovieAdapter(Context context, List<Movie> movieList){
+    public interface MovieAdapterClickHandler{
+        void onClick(Movie currentMovie);
+    }
+
+    public MovieAdapter(Context context, List<Movie> movieList, MovieAdapterClickHandler clickHandler){
 
         this.movieList=movieList;
         this.context=context;
+        mClickhandler=clickHandler;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageView poster;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
             poster=itemView.findViewById(R.id.main_movie_poster);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            Movie currentMovie = movieList.get(position);
+            mClickhandler.onClick(currentMovie);
         }
     }
 
@@ -47,15 +59,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Movie currentMovie = movieList.get(position);
 
-        //String movieName = currentMovie.getOriginalTitle();
-
         String posterPath = currentMovie.getPosterPath();
         String url = NetworkUtils.posterUrlBuilder(posterPath);
-
-        /*StringBuilder stringUrlBuilder = new StringBuilder();
-        stringUrlBuilder.append(POSTER_BASE_URL);
-        stringUrlBuilder.append(posterPath);
-        String url = stringUrlBuilder.toString();*/
 
         Picasso.with(context)
                 .load(url)
@@ -66,7 +71,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         Log.v(TAG, "Requested URL " + url);
         Log.v(TAG, "Position " + position);
         Log.v(TAG, "Poster path " + posterPath);
-        //Log.v(TAG, "title " + movieName);
     }
 
     @Override

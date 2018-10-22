@@ -20,6 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".DetailActivity"
+            android:label="DetailActivity"
+            android:parentActivityName="com.example.rovermore.popularmovies1.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.rovermore.popularmovies1.MainActivity" />
+
+        </activity>
     </application>
 
 </manifest>
