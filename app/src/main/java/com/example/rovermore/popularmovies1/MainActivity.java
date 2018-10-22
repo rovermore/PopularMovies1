@@ -43,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public class FetchMovies extends AsyncTask<String, Void, List<Movie>>{
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected List<Movie> doInBackground(String... path) {
 
             List<Movie> movieList = new ArrayList<>();
@@ -59,20 +54,23 @@ public class MainActivity extends AppCompatActivity {
 
                 movieList = NetworkUtils.parseJson(jsonMoviesResponse);
 
+                return movieList;
+
             } catch (IOException e) {
                 e.printStackTrace();
+                return null;
             } catch (JSONException e) {
                 e.printStackTrace();
+                return null;
             }
-
-            return movieList;
         }
 
         @Override
         protected void onPostExecute(List<Movie> movies) {
             super.onPostExecute(movies);
-
-            createUI(movies);
+            if(movies!=null) {
+                createUI(movies);
+            }
         }
 
 
