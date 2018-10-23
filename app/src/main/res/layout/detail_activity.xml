@@ -15,7 +15,10 @@
             android:id="@+id/tv_original_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="44dp" />
+            android:textSize="54sp"
+            android:background="@color/colorAccent"
+            android:padding="15dp"
+            android:textColor="@android:color/white"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +30,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:adjustViewBounds="true" />
+                android:adjustViewBounds="true"
+                android:padding="15dp"/>
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -38,17 +42,18 @@
                     android:id="@+id/tv_release_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test" />
+                    android:padding="15dp"
+                    android:textSize="22sp"/>
 
                 <TextView
                     android:id="@+id/tv_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_release_date"
-                    android:text="test2" />
+                    android:padding="15dp"
+                    android:textSize="32sp"/>
 
             </RelativeLayout>
-
 
         </LinearLayout>
 
@@ -56,7 +61,8 @@
             android:id="@+id/tv_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18dp" />
+            android:textSize="18sp"
+            android:padding="15dp"/>
 
     </LinearLayout>
 

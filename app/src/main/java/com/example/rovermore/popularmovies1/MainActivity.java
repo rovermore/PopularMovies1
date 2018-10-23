@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         new FetchMovies().execute(POPULAR_PATH);
     }
 
+    //Sets RecyclerView and his corresponding adapter to create the layout
     private void createUI(List<Movie> movieList){
 
         MovieAdapter movieAdapter = new MovieAdapter(this,movieList,this);
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         recyclerView.setAdapter(movieAdapter);
     }
 
+    //Starts the detail activity with the detailed info from the movie clicked
     @Override
     public void onClick(Movie currentMovie) {
 
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         startActivity(intent);
     }
 
+    //Fetches movies list from database and saves it into a List
     public class FetchMovies extends AsyncTask<String, Void, List<Movie>>{
 
         @Override

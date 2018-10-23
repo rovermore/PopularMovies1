@@ -9,6 +9,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
+    //Create variables to save layout views
     TextView tvOriginalTitle;
     ImageView ivPoster;
     TextView tvRate;
@@ -23,12 +24,14 @@ public class DetailActivity extends AppCompatActivity {
         String path = detailMovie.getPosterPath();
         String url = NetworkUtils.posterUrlBuilder(path);
 
+        //Bind the views with the variables
         tvOriginalTitle = findViewById(R.id.tv_original_title);
         ivPoster = findViewById(R.id.iv_poster);
         tvRate = findViewById(R.id.tv_rate);
         tvReleaseDate = findViewById(R.id.tv_release_date);
         tvOverview = findViewById(R.id.tv_overview);
 
+        //Setting the values in the layout
         tvOriginalTitle.setText(detailMovie.getOriginalTitle());
         tvRate.setText(String.valueOf(detailMovie.getVoteAverage()));
         tvReleaseDate.setText(detailMovie.getReleaseDate());
