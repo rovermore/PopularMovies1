@@ -16,16 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class NetworkUtils {
+public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
     private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     public static final String POPULAR_PATH = "popular";
     public static final String TOP_RATED_PATH = "top_rated";
-    static final String API_KEY = "introduce your API KEY";
+    static final String API_KEY = "d091d663185ac3778b669a2e6ddfe40a";
     static final String API_PARAM = "api_key";
     private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342";
 
+    private NetworkUtils(){}
 
     /**
      * Builds the URL used to talk to the MovieDB server.
@@ -120,8 +121,9 @@ public class NetworkUtils {
             String overview = jsonMovie.optString("overview");
             double voteAverage = jsonMovie.optDouble("vote_average");
             String releaseDate = jsonMovie.optString("release_date");
+            int dbId = jsonMovie.optInt("id");
 
-            Movie movie = new Movie(originalTitle,posterPath, overview, voteAverage,releaseDate);
+            Movie movie = new Movie(originalTitle,posterPath, overview, voteAverage,releaseDate,dbId);
 
             Log.v(TAG, "title " + originalTitle);
             Log.v(TAG, "poster " + posterPath);

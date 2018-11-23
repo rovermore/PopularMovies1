@@ -3,4 +3,7 @@
     <string name="TOP_RATED">Top Rated Movies</string>
     <string name="POPULAR">Popular Movies</string>
 
+    <!--Toast for favorited movie-->
+    <string name="fav_toast">The movie was added to favourites</string>
+
 </resources>

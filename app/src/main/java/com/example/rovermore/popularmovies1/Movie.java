@@ -1,23 +1,40 @@
 package com.example.rovermore.popularmovies1;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+@Entity(tableName = "favMovies")
 public class Movie implements Parcelable {
 
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String originalTitle;
     private String posterPath;
     private String overview;
     private double voteAverage;
     private String releaseDate;
+    private int dbId;
 
-    public Movie(String originalTitle, String posterPath, String overview, double voteAverage, String releaseDate){
+    @Ignore
+    public Movie(String originalTitle, String posterPath, String overview, double voteAverage, String releaseDate, int dbId){
         this.originalTitle=originalTitle;
         this.posterPath=posterPath;
         this.overview=overview;
         this.voteAverage=voteAverage;
         this.releaseDate=releaseDate;
+        this.dbId=dbId;
+    }
 
+    public Movie(int id, String originalTitle, String posterPath, String overview, double voteAverage, String releaseDate, int dbId){
+        this.id=id;
+        this.originalTitle=originalTitle;
+        this.posterPath=posterPath;
+        this.overview=overview;
+        this.voteAverage=voteAverage;
+        this.releaseDate=releaseDate;
+        this.dbId=dbId;
     }
 
     public String getOriginalTitle() {
@@ -40,6 +57,8 @@ public class Movie implements Parcelable {
         return releaseDate;
     }
 
+    public int getDbId(){ return dbId; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -52,6 +71,7 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeDouble(voteAverage);
         dest.writeString(releaseDate);
+        dest.writeInt(dbId);
     }
 
     protected Movie(Parcel in) {
@@ -60,6 +80,7 @@ public class Movie implements Parcelable {
         overview = in.readString();
         voteAverage = in.readDouble();
         releaseDate = in.readString();
+        dbId = in.readInt();
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
