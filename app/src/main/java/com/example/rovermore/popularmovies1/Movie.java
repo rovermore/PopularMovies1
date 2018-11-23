@@ -37,6 +37,8 @@ public class Movie implements Parcelable {
         this.dbId=dbId;
     }
 
+    public int getId() { return id; }
+
     public String getOriginalTitle() {
         return originalTitle;
     }

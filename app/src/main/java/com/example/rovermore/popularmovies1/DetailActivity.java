@@ -1,12 +1,12 @@
 package com.example.rovermore.popularmovies1;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -19,16 +19,22 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvReleaseDate;
     private TextView tvOverview;
     private ImageButton favButton;
-    private Context context = getBaseContext();
+
     private static final boolean NOT_FAVORITED_TAG = false;
     private static final boolean FAVORITED_TAG = true;
+
+    // Member variable for the Database
+    private AppDatabase mDb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail_activity);
-        Movie detailMovie = getIntent().getParcelableExtra("movieData");
+
+        mDb = AppDatabase.getInstance(getApplicationContext());
+
+        final Movie detailMovie = getIntent().getParcelableExtra("movieData");
         String path = detailMovie.getPosterPath();
         String url = NetworkUtils.posterUrlBuilder(path);
 
@@ -51,16 +57,33 @@ public class DetailActivity extends AppCompatActivity {
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(favButton.getTag().equals(NOT_FAVORITED_TAG)){
-                //Toast.makeText(context,"Movie was added to favourites",Toast.LENGTH_SHORT).show();
+                    //inserting movie into favMovie table
                 favButton.setBackgroundResource(0);
                 favButton.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
                 favButton.setTag(FAVORITED_TAG);
+                AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        mDb.movieDao().insertMovie(detailMovie);
+
+                    }
+                });
+                    Toast.makeText(getApplicationContext(),"Movie saved in favorites",Toast.LENGTH_SHORT).show();
                 }else{
-                    //Toast.makeText(context,"Movie was removed from favourites", Toast.LENGTH_SHORT).show();
+                    //deleting movie from favourites table
                     favButton.setBackgroundResource(0);
                     favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
                     favButton.setTag(NOT_FAVORITED_TAG);
+                    AppExecutors.getInstance().diskIO().execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDb.movieDao().deleteMovie(detailMovie);
+
+                        }
+                    });
+                    Toast.makeText(getApplicationContext(),"Movie removed from favorites",Toast.LENGTH_SHORT).show();
                 }
             }
         });
