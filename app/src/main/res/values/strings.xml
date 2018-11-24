@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">PopularMovies1</string>
-    <string name="TOP_RATED">Top Rated Movies</string>
-    <string name="POPULAR">Popular Movies</string>
+    <string name="TOP_RATED">Top</string>
+    <string name="POPULAR">Popular</string>
+    <string name="FAVOURITES">Favourites</string>
 
     <!--Toast for favorited movie-->
     <string name="fav_toast">The movie was added to favourites</string>

@@ -25,6 +25,8 @@ public class DetailActivity extends AppCompatActivity {
 
     // Member variable for the Database
     private AppDatabase mDb;
+    int movieDbId;
+    Movie favMovie;
 
 
     @Override
@@ -51,9 +53,29 @@ public class DetailActivity extends AppCompatActivity {
         tvRate.setText(String.valueOf(detailMovie.getVoteAverage()));
         tvReleaseDate.setText(detailMovie.getReleaseDate());
         tvOverview.setText(detailMovie.getOverview());
-        if(favButton.getTag()==null){
-            favButton.setTag(NOT_FAVORITED_TAG);
-        }
+        Picasso.with(this)
+                .load(url)
+                .into(ivPoster);
+        //saving id from online db in a variable
+        movieDbId = detailMovie.getDbId();
+        //checks if the movie is already in the AppDatabase and marks ImageButton view as favourited
+        AppExecutors.getInstance().diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                favMovie = mDb.movieDao().loadMovieByOnLineDbId(movieDbId);
+                if (favMovie != null) {
+
+                    favButton.setTag(FAVORITED_TAG);
+                    favButton.setBackgroundResource(R.drawable.ic_favorite_black_24dp);
+
+                } else {
+                    favButton.setTag(NOT_FAVORITED_TAG);
+                    favButton.setBackgroundResource(R.drawable.ic_favorite_border_black_24dp);
+                }
+            }
+        });
+
+
         favButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +101,8 @@ public class DetailActivity extends AppCompatActivity {
                     AppExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
                         public void run() {
-                            mDb.movieDao().deleteMovie(detailMovie);
+
+                            mDb.movieDao().deleteMovie(favMovie);
 
                         }
                     });
@@ -87,10 +110,6 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Picasso.with(this)
-                .load(url)
-                .into(ivPoster);
 
     }
 }

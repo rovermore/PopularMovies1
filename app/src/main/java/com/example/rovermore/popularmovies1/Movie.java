@@ -15,6 +15,7 @@ public class Movie implements Parcelable {
     private String overview;
     private double voteAverage;
     private String releaseDate;
+    //id from online database
     private int dbId;
 
     @Ignore

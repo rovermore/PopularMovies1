@@ -25,6 +25,13 @@ public interface MovieDao {
     @Delete
     void deleteMovie(Movie Movie);
 
+    @Query("DELETE FROM favMovies WHERE dbId = :dbId")
+    int deleteBydbId(int dbId);
+
     @Query("SELECT * FROM favMovies WHERE id = :id")
     LiveData<Movie> loadMovieById(int id);
+
+    @Query("SELECT * FROM favMovies WHERE dbId = :dbId")
+    Movie loadMovieByOnLineDbId(int dbId);
+
 }

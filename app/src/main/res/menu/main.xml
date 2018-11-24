@@ -12,7 +12,14 @@
 
     <item
         android:id="@+id/fetch_top_rated"
-        android:title="top rated"
+        android:title="top"
         android:orderInCategory="2"
         app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/fav_movies"
+        android:title="Favourites"
+        android:orderInCategory="3"
+        app:showAsAction="always"/>
+
 </menu>

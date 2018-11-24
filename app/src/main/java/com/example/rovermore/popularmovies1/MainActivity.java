@@ -1,11 +1,15 @@
 package com.example.rovermore.popularmovies1;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,6 +25,8 @@ import static com.example.rovermore.popularmovies1.NetworkUtils.TOP_RATED_PATH;
 
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterClickHandler{
 
+    private static final String TAG = MainActivity.class.getSimpleName();
+    MovieAdapter movieAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     //Sets RecyclerView and his corresponding adapter to create the layout
     private void createUI(List<Movie> movieList){
 
-        MovieAdapter movieAdapter = new MovieAdapter(this,movieList,this);
+        movieAdapter = new MovieAdapter(this,movieList,this);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
@@ -84,8 +90,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 createUI(movies);
             }
         }
-
-
     }
 
     @Override
@@ -107,7 +111,23 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
             //fetch data with top_rated query
             new FetchMovies().execute(TOP_RATED_PATH);
         }
+        if(itemId==R.id.fav_movies){
+            //loads favourite list from database
+            setTitle(R.string.FAVOURITES);
+            setUpViewModel();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setUpViewModel(){
+        MainViewModel viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
+            @Override
+            public void onChanged(@Nullable List<Movie> movieList) {
+                Log.d(TAG, "Updating list of movies from LiveData in ViewModel");
+                movieAdapter.setMovies(movieList);
+            }
+        });
     }
 }
