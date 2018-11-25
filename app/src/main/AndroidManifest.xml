@@ -28,6 +28,9 @@
                 android:value="com.example.rovermore.popularmovies1.MainActivity" />
 
         </activity>
+        <activity android:name=".ReviewsActivity"
+            android:label="ReviewsActivity">
+        </activity>
     </application>
 
 </manifest>

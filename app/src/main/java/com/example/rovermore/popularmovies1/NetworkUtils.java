@@ -28,6 +28,7 @@ public final class NetworkUtils {
     private final static String YOUTUBE_BASE_URL = "https://www.youtube.com/watch";
     private final static String TRAILER_BASE_URL = "http://api.themoviedb.org/3/movie/";
     private final static String VIDEO_PATH ="videos";
+    private final static String REVIEWS_PATH ="reviews";
 
     private NetworkUtils(){}
 
@@ -63,6 +64,30 @@ public final class NetworkUtils {
         Uri buildUri = Uri.parse(TRAILER_BASE_URL).buildUpon()
                 .appendPath(path)
                 .appendPath(VIDEO_PATH)
+                .appendQueryParameter(API_PARAM, API_KEY)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(buildUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        Log.v(TAG, "Built URI " + url);
+
+        return url;
+
+    }
+
+    /**
+     * Builds the URL used to extract trailer json from MovieDB server.
+     */
+    public static URL reviewsUrlBuilder(String path){
+
+        //Implement the Url builder
+        Uri buildUri = Uri.parse(TRAILER_BASE_URL).buildUpon()
+                .appendPath(path)
+                .appendPath(REVIEWS_PATH)
                 .appendQueryParameter(API_PARAM, API_KEY)
                 .build();
         URL url = null;
@@ -208,4 +233,30 @@ public final class NetworkUtils {
 
         return trailerList;
     }
+
+    /**
+     * Parses the JSON and saves into a Trailer object.
+     */
+    public static List<Review> parseJsonReview(String json) throws JSONException{
+
+        List<Review> reviewList = new ArrayList<>();
+
+        JSONObject jsonObject = new JSONObject(json);
+
+        JSONArray results = jsonObject.optJSONArray("results");
+
+        for(int i=0;i<results.length();i++){
+            JSONObject currentReview = results.getJSONObject(i);
+
+            String author = currentReview.optString("author");
+            String content = currentReview.optString("content");
+
+            Review review = new Review(author,content);
+
+            reviewList.add(review);
+        }
+
+        return reviewList;
+    }
+
 }

@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
     private TextView tvReleaseDate;
     private TextView tvOverview;
     private ImageButton favButton;
+    private Button reviewsButton;
 
     private static final boolean NOT_FAVORITED_TAG = false;
     private static final boolean FAVORITED_TAG = true;
@@ -62,6 +64,15 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
         tvReleaseDate = findViewById(R.id.tv_release_date);
         tvOverview = findViewById(R.id.tv_overview);
         favButton = findViewById(R.id.ib_fav_movie);
+        reviewsButton = findViewById(R.id.reviews_button);
+        reviewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ReviewsActivity.class);
+                intent.putExtra("id",stringMovieDbId);
+                startActivity(intent);
+            }
+        });
 
         //Setting the values in the layout
         tvOriginalTitle.setText(detailMovie.getOriginalTitle());
@@ -133,7 +144,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapter.
 
     @Override
     public void onClickHandler(Trailer currentTrailer) {
-        //throw intent when clicked
+        //throw intent to open youtube when clicked
         String trailerKey = currentTrailer.getKey();
         String youtubeUrl = NetworkUtils.youtubeUrlBuilder(trailerKey);
         Uri youtubeUri = Uri.parse(youtubeUrl);

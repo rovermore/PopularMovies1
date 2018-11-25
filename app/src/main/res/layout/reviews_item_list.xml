@@ -3,17 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="15dp">
-
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_trailer_name"
+        android:id="@+id/tv_author"
         android:textSize="22sp"
-        android:drawableStart="@drawable/ic_play_circle_outline_black_24dp"
-        android:drawablePadding="8dp"
-        android:background="@drawable/trailer_item_selector"/>
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_content"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"/>
 
 </LinearLayout>
