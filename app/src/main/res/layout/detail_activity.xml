@@ -76,7 +76,12 @@
             android:textSize="18sp"
             android:padding="15dp"/>
 
-    </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recycler_view_detail">
+        </android.support.v7.widget.RecyclerView>
 
+    </LinearLayout>
 
 </ScrollView>

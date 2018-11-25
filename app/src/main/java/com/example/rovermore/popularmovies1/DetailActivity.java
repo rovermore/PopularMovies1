@@ -1,7 +1,12 @@
 package com.example.rovermore.popularmovies1;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -10,7 +15,13 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-public class DetailActivity extends AppCompatActivity {
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
+public class DetailActivity extends AppCompatActivity implements TrailerAdapter.TrailerAdapterClickHandler {
 
     //Create variables to save layout views
     private TextView tvOriginalTitle;
@@ -25,8 +36,12 @@ public class DetailActivity extends AppCompatActivity {
 
     // Member variable for the Database
     private AppDatabase mDb;
-    int movieDbId;
-    Movie favMovie;
+    private int movieDbId;
+    private String stringMovieDbId;
+    private Movie favMovie;
+    private TrailerAdapter trailerAdapter;
+
+
 
 
     @Override
@@ -58,6 +73,7 @@ public class DetailActivity extends AppCompatActivity {
                 .into(ivPoster);
         //saving id from online db in a variable
         movieDbId = detailMovie.getDbId();
+        stringMovieDbId = String.valueOf(movieDbId);
         //checks if the movie is already in the AppDatabase and marks ImageButton view as favourited
         AppExecutors.getInstance().diskIO().execute(new Runnable() {
             @Override
@@ -80,6 +96,7 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //Checks if movie is in favourites table and add it if clicked
                 if(favButton.getTag().equals(NOT_FAVORITED_TAG)){
                     //inserting movie into favMovie table
                 favButton.setBackgroundResource(0);
@@ -110,6 +127,63 @@ public class DetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        new FetchTrailers().execute(stringMovieDbId);
+    }
+
+    @Override
+    public void onClickHandler(Trailer currentTrailer) {
+        //throw intent when clicked
+        String trailerKey = currentTrailer.getKey();
+        String youtubeUrl = NetworkUtils.youtubeUrlBuilder(trailerKey);
+        Uri youtubeUri = Uri.parse(youtubeUrl);
+        Intent intent = new Intent(Intent.ACTION_VIEW,youtubeUri);
+        startActivity(intent);
+    }
+
+    //Fetches trailer list from MovieDb
+    private class FetchTrailers extends AsyncTask<String, Void, List<Trailer>>{
+
+
+        @Override
+        protected List<Trailer> doInBackground(String... strings) {
+
+            List<Trailer> trailerList;
+
+            URL url = NetworkUtils.trailerUrlBuilder(strings[0]);
+
+            try {
+                String jsonResponse = NetworkUtils.getResponseFromHttpUrl(url);
+
+                trailerList = NetworkUtils.parseJsonTrailer(jsonResponse);
+
+                return trailerList;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Trailer> trailerList) {
+            super.onPostExecute(trailerList);
+
+            createRecyclerViewUI(trailerList);
+        }
+    }
+
+    //Sets the recycler view layout for the trailer list
+    private void createRecyclerViewUI(List<Trailer> trailerList) {
+        trailerAdapter = new TrailerAdapter(trailerList, getApplicationContext(), this);
+
+        RecyclerView detailRecyclerView = findViewById(R.id.recycler_view_detail);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        detailRecyclerView.setLayoutManager(layoutManager);
+        detailRecyclerView.setHasFixedSize(true);
+        detailRecyclerView.setAdapter(trailerAdapter);
 
     }
 }
