@@ -22,7 +22,6 @@ public final class NetworkUtils {
     private static final String BASE_URL = "http://api.themoviedb.org/3/movie/";
     public static final String POPULAR_PATH = "popular";
     public static final String TOP_RATED_PATH = "top_rated";
-    private static final String API_KEY = "d091d663185ac3778b669a2e6ddfe40a";
     private static final String API_PARAM = "api_key";
     private static final String POSTER_BASE_URL = "http://image.tmdb.org/t/p/w342";
     private final static String YOUTUBE_BASE_URL = "https://www.youtube.com/watch";
@@ -40,7 +39,7 @@ public final class NetworkUtils {
         //Implement the Url builder
         Uri buildUri = Uri.parse(BASE_URL).buildUpon()
                 .appendPath(path)
-                .appendQueryParameter(API_PARAM, API_KEY)
+                .appendQueryParameter(API_PARAM, BuildConfig.API_KEY)
                 .build();
         URL url = null;
         try {
@@ -64,7 +63,7 @@ public final class NetworkUtils {
         Uri buildUri = Uri.parse(TRAILER_BASE_URL).buildUpon()
                 .appendPath(path)
                 .appendPath(VIDEO_PATH)
-                .appendQueryParameter(API_PARAM, API_KEY)
+                .appendQueryParameter(API_PARAM, BuildConfig.API_KEY)
                 .build();
         URL url = null;
         try {
@@ -88,7 +87,7 @@ public final class NetworkUtils {
         Uri buildUri = Uri.parse(TRAILER_BASE_URL).buildUpon()
                 .appendPath(path)
                 .appendPath(REVIEWS_PATH)
-                .appendQueryParameter(API_PARAM, API_KEY)
+                .appendQueryParameter(API_PARAM, BuildConfig.API_KEY)
                 .build();
         URL url = null;
         try {
