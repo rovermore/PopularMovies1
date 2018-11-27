@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.activities;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.rovermore.popularmovies1.threads.AppExecutors;
+import com.example.rovermore.popularmovies1.network.NetworkUtils;
+import com.example.rovermore.popularmovies1.R;
+import com.example.rovermore.popularmovies1.adapters.TrailerAdapter;
+import com.example.rovermore.popularmovies1.database.AppDatabase;
+import com.example.rovermore.popularmovies1.datamodel.Movie;
+import com.example.rovermore.popularmovies1.datamodel.Trailer;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;

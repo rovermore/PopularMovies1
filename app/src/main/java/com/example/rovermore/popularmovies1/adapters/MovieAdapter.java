@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.rovermore.popularmovies1.network.NetworkUtils;
+import com.example.rovermore.popularmovies1.R;
+import com.example.rovermore.popularmovies1.datamodel.Movie;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -75,6 +78,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
+        if(movieList==null){
+            return 0;
+        }
         return movieList.size();
     }
 

@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.datamodel;
 
 public class Trailer {
 

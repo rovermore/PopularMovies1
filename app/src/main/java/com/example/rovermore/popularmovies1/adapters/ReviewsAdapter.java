@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.rovermore.popularmovies1.R;
+import com.example.rovermore.popularmovies1.datamodel.Review;
 
 import java.util.List;
 

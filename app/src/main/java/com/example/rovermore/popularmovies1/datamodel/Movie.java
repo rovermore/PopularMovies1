@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.datamodel;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

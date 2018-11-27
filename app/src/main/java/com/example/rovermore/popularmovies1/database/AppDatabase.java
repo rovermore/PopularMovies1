@@ -1,10 +1,12 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.database;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 import android.util.Log;
+
+import com.example.rovermore.popularmovies1.datamodel.Movie;
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

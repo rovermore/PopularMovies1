@@ -1,7 +1,15 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
+
+import com.example.rovermore.popularmovies1.BuildConfig;
+import com.example.rovermore.popularmovies1.datamodel.Movie;
+import com.example.rovermore.popularmovies1.datamodel.Review;
+import com.example.rovermore.popularmovies1.datamodel.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -256,6 +264,16 @@ public final class NetworkUtils {
         }
 
         return reviewList;
+    }
+
+    public static boolean isInternetAvailable(Context context){
+        ConnectivityManager ConnectionManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = ConnectionManager.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()){
+            return  true;
+        }else{
+            return false;
+        }
     }
 
 }

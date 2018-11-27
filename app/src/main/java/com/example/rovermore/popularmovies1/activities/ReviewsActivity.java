@@ -1,4 +1,4 @@
-package com.example.rovermore.popularmovies1;
+package com.example.rovermore.popularmovies1.activities;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -8,6 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.example.rovermore.popularmovies1.network.NetworkUtils;
+import com.example.rovermore.popularmovies1.R;
+import com.example.rovermore.popularmovies1.adapters.ReviewsAdapter;
+import com.example.rovermore.popularmovies1.datamodel.Review;
 
 import org.json.JSONException;
 

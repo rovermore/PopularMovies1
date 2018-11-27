@@ -3,9 +3,10 @@
     package="com.example.rovermore.popularmovies1">
 
     <uses-permission
-        android:name="android.permission.INTERNET">
+        android:name="android.permission.INTERNET"/>
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    </uses-permission>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,23 +14,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailActivity"
+        <activity android:name=".activities.DetailActivity"
             android:label="DetailActivity"
-            android:parentActivityName="com.example.rovermore.popularmovies1.MainActivity">
+            android:parentActivityName="com.example.rovermore.popularmovies1.activities.MainActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.rovermore.popularmovies1.MainActivity" />
+                android:value="com.example.rovermore.popularmovies1.activities.MainActivity" />
 
         </activity>
-        <activity android:name=".ReviewsActivity"
-            android:label="ReviewsActivity">
+        <activity android:name=".activities.ReviewsActivity"
+            android:label="ReviewsActivity"
+            android:launchMode="singleTop">
         </activity>
     </application>
 
